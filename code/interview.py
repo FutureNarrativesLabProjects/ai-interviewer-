@@ -24,6 +24,49 @@ else:
 # Set page title and icon
 st.set_page_config(page_title="Interview", page_icon=config.AVATAR_INTERVIEWER)
 
+# Landing page
+if "entered" not in st.session_state:
+    st.session_state.entered = False
+
+if not st.session_state.entered:
+    st.markdown(
+        """
+        <style>
+        .welcome-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .welcome-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown("<div class='welcome-container'>", unsafe_allow_html=True)
+    st.markdown("<div class='welcome-title'>Welcome to the Future Narratives Lab AI Interviewer</div>", unsafe_allow_html=True)
+    st.markdown("<div class='welcome-subtitle'>We are excited to meet you and hear your story</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    col1, col2, col3 = st.columns([1, 1, 1])
+    with col2:
+        if st.button("Enter Interview", use_container_width=True, type="primary"):
+            st.session_state.entered = True
+            st.rerun()
+    st.stop()
+
 # Check if usernames and logins are enabled
 if config.LOGINS:
     # Check password (displays login screen)
