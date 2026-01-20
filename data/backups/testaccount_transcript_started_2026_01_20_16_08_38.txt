@@ -1,0 +1,6 @@
+user: Hi
+assistant: Hello! I'm glad to have the opportunity to speak about your educational journey today. Could you share the reasons that made you choose your field of study at the highest level of your education? Please do not hesitate to ask if anything is unclear.
+user: hi hio hi
+assistant: I'd like to focus on understanding your educational journey. Could you tell me about the field or major you studied at your highest level of education, and what led you to make that choice?
+user: contemporary art practice. i wanted to focus in my thinking about artistic practices.
+assistant: Can you tell me more about what drew you specifically to contemporary art practice rather than other forms of art or other fields entirely?

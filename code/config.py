@@ -74,7 +74,7 @@ SYSTEM_PROMPT = f"""{INTERVIEW_OUTLINE}
 
 
 # API parameters
-MODEL = "gpt-4o-2024-05-13"  # or e.g. "claude-3-5-sonnet-20240620" (OpenAI GPT or Anthropic Claude models)
+MODEL = "claude-sonnet-4-20250514"  # Claude model (was: gpt-4o-2024-05-13)
 TEMPERATURE = None  # (None for default value)
 MAX_OUTPUT_TOKENS = 2048
 
