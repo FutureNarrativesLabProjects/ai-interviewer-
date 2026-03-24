@@ -2,6 +2,8 @@ import streamlit as st
 import hmac
 import time
 import os
+import gspread
+from google.oauth2.service_account import Credentials
 
 
 # Password screen for dashboard (note: only very basic authentication!)
@@ -59,6 +61,30 @@ def check_if_interview_completed(directory, username):
         return False
 
 
+def save_to_google_sheets(anonymous_id, start_time, duration):
+    """Save interview transcript and metadata to Google Sheets."""
+    try:
+        scopes = ["https://www.googleapis.com/auth/spreadsheets"]
+        creds = Credentials.from_service_account_info(
+            st.secrets["gcp_service_account"], scopes=scopes
+        )
+        client = gspread.authorize(creds)
+        sheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"]).sheet1
+
+        transcript_text = "\n".join(
+            f"{m['role']}: {m['content']}" for m in st.session_state.messages
+        )
+
+        sheet.append_row([
+            anonymous_id,
+            time.strftime("%d/%m/%Y %H:%M:%S", time.localtime(start_time)),
+            f"{duration:.2f}",
+            transcript_text,
+        ])
+    except Exception:
+        pass
+
+
 def save_interview_data(
     username,
     transcripts_directory,
@@ -66,9 +92,11 @@ def save_interview_data(
     file_name_addition_transcript="",
     file_name_addition_time="",
 ):
-    """Write interview data (transcript and time) to disk."""
+    """Write interview data (transcript and time) to disk and Google Sheets."""
 
-    # Store chat transcript
+    duration = (time.time() - st.session_state.start_time) / 60
+
+    # Store chat transcript locally
     with open(
         os.path.join(
             transcripts_directory, f"{username}{file_name_addition_transcript}.txt"
@@ -78,12 +106,18 @@ def save_interview_data(
         for message in st.session_state.messages:
             t.write(f"{message['role']}: {message['content']}\n")
 
-    # Store file with start time and duration of interview
+    # Store file with start time and duration locally
     with open(
         os.path.join(times_directory, f"{username}{file_name_addition_time}.txt"),
         "w",
     ) as d:
-        duration = (time.time() - st.session_state.start_time) / 60
         d.write(
             f"Start time (UTC): {time.strftime('%d/%m/%Y %H:%M:%S', time.localtime(st.session_state.start_time))}\nInterview duration (minutes): {duration:.2f}"
         )
+
+    # Save to Google Sheets
+    save_to_google_sheets(
+        anonymous_id=st.session_state.get("anonymous_id", username),
+        start_time=st.session_state.start_time,
+        duration=duration,
+    )

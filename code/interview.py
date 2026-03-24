@@ -1,5 +1,6 @@
 import streamlit as st
 import time
+import uuid
 from utils import (
     check_password,
     check_if_interview_completed,
@@ -120,6 +121,10 @@ if "interview_active" not in st.session_state:
 # Initialise messages list in session state
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
+# Generate anonymous session ID
+if "anonymous_id" not in st.session_state:
+    st.session_state.anonymous_id = str(uuid.uuid4())
 
 # Store start time in session state
 if "start_time" not in st.session_state:
