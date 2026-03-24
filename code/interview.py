@@ -22,7 +22,7 @@ else:
     )
 
 # Set page title and icon
-st.set_page_config(page_title="Interview", page_icon=config.AVATAR_INTERVIEWER)
+st.set_page_config(page_title="FNL: Shaping Our Shared Future", page_icon=config.AVATAR_INTERVIEWER)
 
 # Landing page
 if "entered" not in st.session_state:
@@ -43,11 +43,18 @@ if not st.session_state.entered:
         .welcome-title {
             font-size: 2.5rem;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
         .welcome-subtitle {
             font-size: 1.3rem;
             color: #666;
+            margin-bottom: 24px;
+        }
+        .welcome-body {
+            font-size: 1rem;
+            color: #444;
+            max-width: 600px;
+            line-height: 1.6;
             margin-bottom: 40px;
         }
         </style>
@@ -56,8 +63,9 @@ if not st.session_state.entered:
     )
 
     st.markdown("<div class='welcome-container'>", unsafe_allow_html=True)
-    st.markdown("<div class='welcome-title'>Welcome to the Future Narratives Lab AI Interviewer</div>", unsafe_allow_html=True)
-    st.markdown("<div class='welcome-subtitle'>We are excited to meet you and hear your story</div>", unsafe_allow_html=True)
+    st.markdown("<div class='welcome-title'>Future Narratives Lab Worker Coop: Shaping Our Shared Future</div>", unsafe_allow_html=True)
+    st.markdown("<div class='welcome-subtitle'>Welcome to the Civil Society Interviewer Tool.</div>", unsafe_allow_html=True)
+    st.markdown("<div class='welcome-body'>As FNL transitions into a cooperative, we are seeking to align our internal governance with our mission of societal narrative change. We invite you to share your experiences with cooperative principles and help us define what stewardship looks like at the Lab.</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
     st.divider()
