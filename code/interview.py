@@ -163,6 +163,7 @@ with col2:
             st.session_state.username,
             config.TRANSCRIPTS_DIRECTORY,
             config.TIMES_DIRECTORY,
+            final=True,
         )
 
 
@@ -345,6 +346,7 @@ if st.session_state.interview_active:
                             username=st.session_state.username,
                             transcripts_directory=config.TRANSCRIPTS_DIRECTORY,
                             times_directory=config.TIMES_DIRECTORY,
+                            final=True,
                         )
 
                         final_transcript_stored = check_if_interview_completed(

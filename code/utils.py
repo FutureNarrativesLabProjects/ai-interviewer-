@@ -62,7 +62,7 @@ def check_if_interview_completed(directory, username):
 
 
 def save_to_google_sheets(anonymous_id, start_time, duration):
-    """Save interview transcript and metadata to Google Sheets."""
+    """Save completed interview transcript and metadata to Google Sheets."""
     try:
         scopes = ["https://www.googleapis.com/auth/spreadsheets"]
         creds = Credentials.from_service_account_info(
@@ -71,9 +71,14 @@ def save_to_google_sheets(anonymous_id, start_time, duration):
         client = gspread.authorize(creds)
         sheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"]).sheet1
 
-        transcript_text = "\n".join(
-            f"{m['role']}: {m['content']}" for m in st.session_state.messages
-        )
+        # Format transcript readably, skipping the silent opening "Hi" trigger
+        lines = []
+        for m in st.session_state.messages:
+            if m["role"] == "user" and m["content"] == "Hi":
+                continue
+            label = "Interviewer" if m["role"] == "assistant" else "Participant"
+            lines.append(f"{label}:\n{m['content']}")
+        transcript_text = "\n\n---\n\n".join(lines)
 
         sheet.append_row([
             anonymous_id,
@@ -91,8 +96,9 @@ def save_interview_data(
     times_directory,
     file_name_addition_transcript="",
     file_name_addition_time="",
+    final=False,
 ):
-    """Write interview data (transcript and time) to disk and Google Sheets."""
+    """Write interview data (transcript and time) to disk. On final save, also write to Google Sheets."""
 
     duration = (time.time() - st.session_state.start_time) / 60
 
@@ -115,9 +121,10 @@ def save_interview_data(
             f"Start time (UTC): {time.strftime('%d/%m/%Y %H:%M:%S', time.localtime(st.session_state.start_time))}\nInterview duration (minutes): {duration:.2f}"
         )
 
-    # Save to Google Sheets
-    save_to_google_sheets(
-        anonymous_id=st.session_state.get("anonymous_id", username),
-        start_time=st.session_state.start_time,
-        duration=duration,
-    )
+    # Only save to Google Sheets on final save, not during backups
+    if final:
+        save_to_google_sheets(
+            anonymous_id=st.session_state.get("anonymous_id", username),
+            start_time=st.session_state.start_time,
+            duration=duration,
+        )
