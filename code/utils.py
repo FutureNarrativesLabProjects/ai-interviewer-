@@ -121,10 +121,11 @@ def save_interview_data(
             f"Start time (UTC): {time.strftime('%d/%m/%Y %H:%M:%S', time.localtime(st.session_state.start_time))}\nInterview duration (minutes): {duration:.2f}"
         )
 
-    # Only save to Google Sheets on final save, not during backups
-    if final:
+    # Only save to Google Sheets once on final save, not during backups or loop retries
+    if final and not st.session_state.get("sheets_saved", False):
         save_to_google_sheets(
             anonymous_id=st.session_state.get("anonymous_id", username),
             start_time=st.session_state.start_time,
             duration=duration,
         )
+        st.session_state.sheets_saved = True
