@@ -71,20 +71,20 @@ if not st.session_state.entered:
 
     st.divider()
 
-    with st.expander("Before you begin — how your data is used"):
-        st.markdown(
-            """
-**What is collected:** Your typed responses and the AI's questions (a full transcript), plus the time and duration of your interview. No name, email, or device data is collected unless you share it in your answers.
-
-**How the AI works:** Your responses are sent to Anthropic's Claude AI in real time to generate interview questions. This is processed on Anthropic's servers according to their [Privacy Policy](https://www.anthropic.com/legal/privacy-policy).
-
-**Who can see your data:** Only the Future Narratives Lab research team. Transcripts are not published or shared with third parties. Results are anonymised.
-
-**Your rights:** You can stop at any time using the Quit button. To request deletion of your data after the interview, contact the research team.
-
-By clicking **Enter Interview** below you confirm you have read this information and agree to participate.
-            """
-        )
+    # with st.expander("Before you begin — how your data is used"):
+    #     st.markdown(
+    #         """
+    # **What is collected:** Your typed responses and the AI's questions (a full transcript), plus the time and duration of your interview. No name, email, or device data is collected unless you share it in your answers.
+    #
+    # **How the AI works:** Your responses are sent to Anthropic's Claude AI in real time to generate interview questions. This is processed on Anthropic's servers according to their [Privacy Policy](https://www.anthropic.com/legal/privacy-policy).
+    #
+    # **Who can see your data:** Only the Future Narratives Lab research team. Transcripts are not published or shared with third parties. Results are anonymised.
+    #
+    # **Your rights:** You can stop at any time using the Quit button. To request deletion of your data after the interview, contact the research team.
+    #
+    # By clicking **Enter Interview** below you confirm you have read this information and agree to participate.
+    #         """
+    #     )
 
     st.markdown("<br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 1, 1])
