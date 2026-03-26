@@ -78,7 +78,7 @@ End of the interview: When you have asked all questions from the Interview Outli
 CLOSING_MESSAGES = {}
 CLOSING_MESSAGES["5j3k"] = "Thank you for participating, the interview concludes here."
 CLOSING_MESSAGES["x7y8"] = (
-    "Thank you so much for sharing your experience with us. Your insights are invaluable in helping us understand the impact of grassroots communities. We truly appreciate your time and openness!"
+    "Thank you so much for sharing your experience with us. Your insights are invaluable in helping TOMA shape its first AI policy. We truly appreciate your time and openness!"
 )
 
 
