@@ -30,13 +30,14 @@ if "entered" not in st.session_state:
 
 if not st.session_state.entered:
     # Logos
+    img_dir = os.path.join(os.path.dirname(__file__), "images")
     col1, col2, col3 = st.columns([1, 1, 1])
     with col1:
-        st.image("images/logo-toma.webp", use_container_width=True)
+        st.image(os.path.join(img_dir, "logo-toma.webp"), use_container_width=True)
     with col2:
-        st.image("images/logo-fnl.png", use_container_width=True)
+        st.image(os.path.join(img_dir, "logo-fnl.png"), use_container_width=True)
     with col3:
-        st.image("images/logo-kings.png", use_container_width=True)
+        st.image(os.path.join(img_dir, "logo-kings.png"), use_container_width=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
