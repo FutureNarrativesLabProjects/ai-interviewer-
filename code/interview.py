@@ -29,53 +29,29 @@ if "entered" not in st.session_state:
     st.session_state.entered = False
 
 if not st.session_state.entered:
+    # Logos
+    col1, col2, col3 = st.columns([1, 1, 1])
+    with col1:
+        st.image("images/logo-toma.webp", use_container_width=True)
+    with col2:
+        st.image("images/logo-fnl.png", use_container_width=True)
+    with col3:
+        st.image("images/logo-kings.png", use_container_width=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
     st.markdown(
         """
-        <style>
-        .welcome-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-            text-align: center;
-        }
-        .welcome-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .welcome-subtitle {
-            font-size: 1.3rem;
-            color: #666;
-            margin-bottom: 40px;
-        }
-        </style>
+        <div style="text-align: center;">
+            <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.75rem;">TOMA AI Policy Interview</h2>
+            <p style="font-size: 1.1rem; color: #555; max-width: 520px; margin: 0 auto 2rem;">
+                This interview is part of TOMA's process of developing its first AI policy.
+                Your responses are anonymous and will be reviewed only by the TOMA and FNL research team.
+            </p>
+        </div>
         """,
         unsafe_allow_html=True,
     )
-
-    st.markdown("<div class='welcome-container'>", unsafe_allow_html=True)
-    st.markdown("<div class='welcome-title'>Welcome to the Future Narratives Lab AI Interviewer</div>", unsafe_allow_html=True)
-    st.markdown("<div class='welcome-subtitle'>We are excited to meet you and hear your story</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    st.divider()
-
-    with st.expander("Before you begin — how your data is used"):
-        st.markdown(
-            """
-**What is collected:** Your typed responses and the AI's questions (a full transcript), plus the time and duration of your interview. No name, email, or device data is collected unless you share it in your answers.
-
-**How the AI works:** Your responses are sent to Anthropic's Claude AI in real time to generate interview questions. This is processed on Anthropic's servers according to their [Privacy Policy](https://www.anthropic.com/legal/privacy-policy).
-
-**Who can see your data:** Only the Future Narratives Lab research team. Transcripts are not published or shared with third parties. Results are anonymised.
-
-**Your rights:** You can stop at any time using the Quit button. To request deletion of your data after the interview, contact the research team.
-
-By clicking **Enter Interview** below you confirm you have read this information and agree to participate.
-            """
-        )
 
     st.markdown("<br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 1, 1])
