@@ -47,7 +47,6 @@ if not st.session_state.entered:
             <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.75rem;">TOMA AI Policy Interview</h2>
             <p style="font-size: 1.1rem; color: #555; max-width: 520px; margin: 0 auto 2rem;">
                 This interview is part of TOMA's process of developing its first AI policy.
-                Your responses are anonymous and will be reviewed only by the TOMA and FNL research team.
             </p>
         </div>
         """,
