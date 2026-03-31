@@ -339,6 +339,13 @@ if st.session_state.interview_active:
                     )
                     st.session_state.interview_active = False
 
+                    # Display closing message in chat
+                    closing_message = config.CLOSING_MESSAGES[code]
+                    st.markdown(closing_message)
+                    st.session_state.messages.append(
+                        {"role": "assistant", "content": closing_message}
+                    )
+
                     # Store final transcript and save to Google Sheets
                     save_interview_data(
                         username=st.session_state.username,
@@ -348,4 +355,11 @@ if st.session_state.interview_active:
                     )
 
                     st.session_state.interview_completed = True
-                    st.rerun()
+
+# Show continue button after interview completes
+if st.session_state.get("interview_completed") and not st.session_state.get("interview_active"):
+    st.markdown("<br>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 1, 1])
+    with col2:
+        if st.button("Continue", use_container_width=True, type="primary"):
+            st.rerun()
