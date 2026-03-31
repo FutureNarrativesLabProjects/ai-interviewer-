@@ -35,9 +35,21 @@ if "entered" not in st.session_state:
     st.session_state.entered = False
 
 if not st.session_state.entered:
+    # Logos
+    img_dir = os.path.join(os.path.dirname(__file__), "images")
+    col1, col2, col3 = st.columns([1, 1, 1])
+    with col1:
+        st.image(os.path.join(img_dir, "logo-kings.png"), use_container_width=True)
+    with col2:
+        st.image(os.path.join(img_dir, "logo-pembroke.svg"), use_container_width=True)
+    with col3:
+        st.image(os.path.join(img_dir, "logo-fnl.png"), use_container_width=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
     st.markdown(
         """
-        <div style="text-align: center; padding: 40px 20px 20px;">
+        <div style="text-align: center;">
             <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.75rem;">Walworth Road Opportunity — Community Interview</h2>
             <p style="font-size: 1.1rem; color: #555; max-width: 520px; margin: 0 auto 2rem;">
                 This interview is part of Pembroke House's research into what community ownership could look like for a new food space in Walworth.
