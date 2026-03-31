@@ -191,16 +191,12 @@ if not st.session_state.messages:
         st.session_state.messages.append({"role": "user", "content": "Hi"})
         with st.chat_message("assistant", avatar=config.AVATAR_INTERVIEWER):
             message_placeholder = st.empty()
-            message_interviewer = ""
-            with client.chat.stream(
+            response = client.chat.complete(
                 model=config.MODEL,
                 messages=st.session_state.messages,
                 max_tokens=config.MAX_OUTPUT_TOKENS,
-            ) as stream:
-                for text in stream.get_text_stream():
-                    if text:
-                        message_interviewer += text
-                    message_placeholder.markdown(message_interviewer + "▌")
+            )
+            message_interviewer = response.choices[0].message.content
             message_placeholder.markdown(message_interviewer)
 
     st.session_state.messages.append(
@@ -279,25 +275,17 @@ if st.session_state.interview_active:
 
             elif api == "mistral":
 
-                # Stream responses
-                with client.chat.stream(
+                # Get response (non-streaming)
+                response = client.chat.complete(
                     model=config.MODEL,
                     messages=st.session_state.messages,
                     max_tokens=config.MAX_OUTPUT_TOKENS,
-                ) as stream:
-                    for text in stream.get_text_stream():
-                        if text:
-                            message_interviewer += text
-                        # Start displaying message only after 5 characters to first check for codes
-                        if len(message_interviewer) > 5:
-                            message_placeholder.markdown(message_interviewer + "▌")
-                        if any(
-                            code in message_interviewer
-                            for code in config.CLOSING_MESSAGES.keys()
-                        ):
-                            # Stop displaying the progress of the message in case of a code
-                            message_placeholder.empty()
-                            break
+                )
+                message_interviewer = response.choices[0].message.content
+                if not any(code in message_interviewer for code in config.CLOSING_MESSAGES.keys()):
+                    message_placeholder.markdown(message_interviewer)
+                else:
+                    message_placeholder.empty()
 
             # If no code is in the message, display and store the message
             if not any(
