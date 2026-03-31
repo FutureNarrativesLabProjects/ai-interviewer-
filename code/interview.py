@@ -339,19 +339,13 @@ if st.session_state.interview_active:
                     )
                     st.session_state.interview_active = False
 
-                    # Store final transcript
-                    final_transcript_stored = False
-                    while not final_transcript_stored:
-                        save_interview_data(
-                            username=st.session_state.username,
-                            transcripts_directory=config.TRANSCRIPTS_DIRECTORY,
-                            times_directory=config.TIMES_DIRECTORY,
-                            final=True,
-                        )
-                        final_transcript_stored = check_if_interview_completed(
-                            config.TRANSCRIPTS_DIRECTORY, st.session_state.username
-                        )
-                        time.sleep(0.1)
+                    # Store final transcript and save to Google Sheets
+                    save_interview_data(
+                        username=st.session_state.username,
+                        transcripts_directory=config.TRANSCRIPTS_DIRECTORY,
+                        times_directory=config.TIMES_DIRECTORY,
+                        final=True,
+                    )
 
                     st.session_state.interview_completed = True
                     st.rerun()
