@@ -1,5 +1,6 @@
 import streamlit as st
 import time
+import uuid
 from utils import (
     check_password,
     check_if_interview_completed,
@@ -95,6 +96,10 @@ if "start_time" not in st.session_state:
     st.session_state.start_time_file_names = time.strftime(
         "%Y_%m_%d_%H_%M_%S", time.localtime(st.session_state.start_time)
     )
+
+# Generate anonymous ID for Google Sheets
+if "anonymous_id" not in st.session_state:
+    st.session_state.anonymous_id = str(uuid.uuid4())
 
 # Check if interview previously completed
 interview_previously_completed = check_if_interview_completed(
@@ -308,6 +313,7 @@ if st.session_state.interview_active:
                             username=st.session_state.username,
                             transcripts_directory=config.TRANSCRIPTS_DIRECTORY,
                             times_directory=config.TIMES_DIRECTORY,
+                            final=True,
                         )
 
                         final_transcript_stored = check_if_interview_completed(
