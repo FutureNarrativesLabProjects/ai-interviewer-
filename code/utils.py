@@ -71,9 +71,11 @@ def save_to_google_sheets(anonymous_id, start_time, duration):
         client = gspread.authorize(creds)
         sheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"]).sheet1
 
-        # Format transcript readably, skipping the silent opening "Hi" trigger
+        # Format transcript readably, skipping system prompt and silent opening "Hi" trigger
         lines = []
         for m in st.session_state.messages:
+            if m["role"] == "system":
+                continue
             if m["role"] == "user" and m["content"] == "Hi":
                 continue
             label = "Interviewer" if m["role"] == "assistant" else "Participant"
