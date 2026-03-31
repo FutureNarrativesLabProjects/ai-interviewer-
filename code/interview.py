@@ -1,5 +1,6 @@
 import streamlit as st
 import time
+import uuid
 from utils import (
     check_password,
     check_if_interview_completed,
@@ -16,9 +17,14 @@ if "gpt" in config.MODEL.lower():
 elif "claude" in config.MODEL.lower():
     api = "anthropic"
     import anthropic
+
+elif "mistral" in config.MODEL.lower():
+    api = "mistral"
+    from mistralai import Mistral
+
 else:
     raise ValueError(
-        "Model does not contain 'gpt' or 'claude'; unable to determine API."
+        "Model does not contain 'gpt', 'claude', or 'mistral'; unable to determine API."
     )
 
 # Set page title and icon
@@ -31,51 +37,15 @@ if "entered" not in st.session_state:
 if not st.session_state.entered:
     st.markdown(
         """
-        <style>
-        .welcome-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-            text-align: center;
-        }
-        .welcome-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .welcome-subtitle {
-            font-size: 1.3rem;
-            color: #666;
-            margin-bottom: 40px;
-        }
-        </style>
+        <div style="text-align: center; padding: 40px 20px 20px;">
+            <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.75rem;">Walworth Road Opportunity — Community Interview</h2>
+            <p style="font-size: 1.1rem; color: #555; max-width: 520px; margin: 0 auto 2rem;">
+                This interview is part of Pembroke House's research into what community ownership could look like for a new food space in Walworth.
+            </p>
+        </div>
         """,
         unsafe_allow_html=True,
     )
-
-    st.markdown("<div class='welcome-container'>", unsafe_allow_html=True)
-    st.markdown("<div class='welcome-title'>Welcome to the Future Narratives Lab AI Interviewer</div>", unsafe_allow_html=True)
-    st.markdown("<div class='welcome-subtitle'>We are excited to meet you and hear your story</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    st.divider()
-
-    with st.expander("Before you begin — how your data is used"):
-        st.markdown(
-            """
-**What is collected:** Your typed responses and the AI's questions (a full transcript), plus the time and duration of your interview. No name, email, or device data is collected unless you share it in your answers.
-
-**How the AI works:** Your responses are sent to Anthropic's Claude AI in real time to generate interview questions. This is processed on Anthropic's servers according to their [Privacy Policy](https://www.anthropic.com/legal/privacy-policy).
-
-**Who can see your data:** Only the Future Narratives Lab research team. Transcripts are not published or shared with third parties. Results are anonymised.
-
-**Your rights:** You can stop at any time using the Quit button. To request deletion of your data after the interview, contact the research team.
-
-By clicking **Enter Interview** below you confirm you have read this information and agree to participate.
-            """
-        )
 
     st.markdown("<br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 1, 1])
@@ -119,6 +89,10 @@ if "start_time" not in st.session_state:
     st.session_state.start_time_file_names = time.strftime(
         "%Y_%m_%d_%H_%M_%S", time.localtime(st.session_state.start_time)
     )
+
+# Generate anonymous ID for Google Sheets
+if "anonymous_id" not in st.session_state:
+    st.session_state.anonymous_id = str(uuid.uuid4())
 
 # Check if interview previously completed
 interview_previously_completed = check_if_interview_completed(
@@ -172,6 +146,9 @@ if api == "openai":
 elif api == "anthropic":
     client = anthropic.Anthropic(api_key=st.secrets["API_KEY_ANTHROPIC"])
     api_kwargs = {"system": config.SYSTEM_PROMPT}
+elif api == "mistral":
+    client = Mistral(api_key=st.secrets["API_KEY_MISTRAL"])
+    api_kwargs = {}
 
 # API kwargs
 api_kwargs["messages"] = st.session_state.messages
@@ -203,6 +180,26 @@ if not st.session_state.messages:
                 for text_delta in stream.text_stream:
                     if text_delta != None:
                         message_interviewer += text_delta
+                    message_placeholder.markdown(message_interviewer + "▌")
+            message_placeholder.markdown(message_interviewer)
+
+    elif api == "mistral":
+
+        st.session_state.messages.append(
+            {"role": "system", "content": config.SYSTEM_PROMPT}
+        )
+        st.session_state.messages.append({"role": "user", "content": "Hi"})
+        with st.chat_message("assistant", avatar=config.AVATAR_INTERVIEWER):
+            message_placeholder = st.empty()
+            message_interviewer = ""
+            with client.chat.stream(
+                model=config.MODEL,
+                messages=st.session_state.messages,
+                max_tokens=config.MAX_OUTPUT_TOKENS,
+            ) as stream:
+                for text in stream.get_text_stream():
+                    if text:
+                        message_interviewer += text
                     message_placeholder.markdown(message_interviewer + "▌")
             message_placeholder.markdown(message_interviewer)
 
@@ -280,6 +277,28 @@ if st.session_state.interview_active:
                             message_placeholder.empty()
                             break
 
+            elif api == "mistral":
+
+                # Stream responses
+                with client.chat.stream(
+                    model=config.MODEL,
+                    messages=st.session_state.messages,
+                    max_tokens=config.MAX_OUTPUT_TOKENS,
+                ) as stream:
+                    for text in stream.get_text_stream():
+                        if text:
+                            message_interviewer += text
+                        # Start displaying message only after 5 characters to first check for codes
+                        if len(message_interviewer) > 5:
+                            message_placeholder.markdown(message_interviewer + "▌")
+                        if any(
+                            code in message_interviewer
+                            for code in config.CLOSING_MESSAGES.keys()
+                        ):
+                            # Stop displaying the progress of the message in case of a code
+                            message_placeholder.empty()
+                            break
+
             # If no code is in the message, display and store the message
             if not any(
                 code in message_interviewer for code in config.CLOSING_MESSAGES.keys()
@@ -332,6 +351,7 @@ if st.session_state.interview_active:
                             username=st.session_state.username,
                             transcripts_directory=config.TRANSCRIPTS_DIRECTORY,
                             times_directory=config.TIMES_DIRECTORY,
+                            final=True,
                         )
 
                         final_transcript_stored = check_if_interview_completed(
