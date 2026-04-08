@@ -93,7 +93,7 @@ SYSTEM_PROMPT = f"""{INTERVIEW_OUTLINE}
 
 
 # API parameters
-MODEL = "claude-sonnet-4-20250514"  # Claude model (was: gpt-4o-2024-05-13)
+MODEL = "mistral-large-latest"  # Claude model (was: gpt-4o-2024-05-13)
 TEMPERATURE = None  # (None for default value)
 MAX_OUTPUT_TOKENS = 2048
 
