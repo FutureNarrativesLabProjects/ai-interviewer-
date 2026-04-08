@@ -35,36 +35,39 @@ if "entered" not in st.session_state:
     st.session_state.entered = False
 
 if not st.session_state.entered:
-    # Logos
-    img_dir = os.path.join(os.path.dirname(__file__), "images")
-    col1, col2, col3 = st.columns([1, 1, 1])
-    with col1:
-        st.image(os.path.join(img_dir, "logo-kings.png"), use_container_width=True)
-    with col2:
-        st.image(os.path.join(img_dir, "logo-toma.webp"), use_container_width=True)
-    with col3:
-        st.image(os.path.join(img_dir, "logo-fnl.png"), use_container_width=True)
+    landing = st.empty()
+    with landing.container():
+        # Logos
+        img_dir = os.path.join(os.path.dirname(__file__), "images")
+        col1, col2, col3 = st.columns([1, 1, 1])
+        with col1:
+            st.image(os.path.join(img_dir, "logo-kings.png"), use_container_width=True)
+        with col2:
+            st.image(os.path.join(img_dir, "logo-toma.webp"), use_container_width=True)
+        with col3:
+            st.image(os.path.join(img_dir, "logo-fnl.png"), use_container_width=True)
 
-    st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
 
-    st.markdown(
-        """
-        <div style="text-align: center;">
-            <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.75rem;">TOMA AI Policy Interview</h2>
-            <p style="font-size: 1.1rem; color: #555; max-width: 520px; margin: 0 auto 2rem;">
-                This interview is part of TOMA's process of developing its first AI policy.
-            </p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.75rem;">TOMA AI Policy Interview</h2>
+                <p style="font-size: 1.1rem; color: #555; max-width: 520px; margin: 0 auto 2rem;">
+                    This interview is part of TOMA's process of developing its first AI policy.
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
-    st.markdown("<br>", unsafe_allow_html=True)
-    col1, col2, col3 = st.columns([1, 1, 1])
-    with col2:
-        if st.button("Enter Interview", use_container_width=True, type="primary"):
-            st.session_state.entered = True
-            st.rerun()
+        st.markdown("<br>", unsafe_allow_html=True)
+        col1, col2, col3 = st.columns([1, 1, 1])
+        with col2:
+            if st.button("Enter Interview", use_container_width=True, type="primary"):
+                landing.empty()
+                st.session_state.entered = True
+                st.rerun()
     st.stop()
 
 # Check if usernames and logins are enabled
