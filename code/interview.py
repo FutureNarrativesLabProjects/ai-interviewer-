@@ -17,9 +17,14 @@ if "gpt" in config.MODEL.lower():
 elif "claude" in config.MODEL.lower():
     api = "anthropic"
     import anthropic
+
+elif "mistral" in config.MODEL.lower():
+    api = "mistral"
+    from mistralai import Mistral
+
 else:
     raise ValueError(
-        "Model does not contain 'gpt' or 'claude'; unable to determine API."
+        "Model does not contain 'gpt', 'claude', or 'mistral'; unable to determine API."
     )
 
 # Set page title and icon
@@ -137,6 +142,8 @@ with col2:
 # Upon rerun, display the previous conversation (except system prompt or first message)
 for message in st.session_state.messages[1:]:
 
+    if message["role"] == "system":
+        continue
     if message["role"] == "assistant":
         avatar = config.AVATAR_INTERVIEWER
     else:
@@ -153,6 +160,9 @@ if api == "openai":
 elif api == "anthropic":
     client = anthropic.Anthropic(api_key=st.secrets["API_KEY_ANTHROPIC"])
     api_kwargs = {"system": config.SYSTEM_PROMPT}
+elif api == "mistral":
+    client = Mistral(api_key=st.secrets["API_KEY_MISTRAL"])
+    api_kwargs = {}
 
 # API kwargs
 api_kwargs["messages"] = st.session_state.messages
@@ -185,6 +195,22 @@ if not st.session_state.messages:
                     if text_delta != None:
                         message_interviewer += text_delta
                     message_placeholder.markdown(message_interviewer + "▌")
+            message_placeholder.markdown(message_interviewer)
+
+    elif api == "mistral":
+
+        st.session_state.messages.append(
+            {"role": "system", "content": config.SYSTEM_PROMPT}
+        )
+        st.session_state.messages.append({"role": "user", "content": "Hi"})
+        with st.chat_message("assistant", avatar=config.AVATAR_INTERVIEWER):
+            message_placeholder = st.empty()
+            response = client.chat.complete(
+                model=config.MODEL,
+                messages=st.session_state.messages,
+                max_tokens=config.MAX_OUTPUT_TOKENS,
+            )
+            message_interviewer = response.choices[0].message.content
             message_placeholder.markdown(message_interviewer)
 
     st.session_state.messages.append(
@@ -261,12 +287,25 @@ if st.session_state.interview_active:
                             message_placeholder.empty()
                             break
 
+            elif api == "mistral":
+
+                response = client.chat.complete(
+                    model=config.MODEL,
+                    messages=st.session_state.messages,
+                    max_tokens=config.MAX_OUTPUT_TOKENS,
+                )
+                message_interviewer = response.choices[0].message.content
+                if not any(code in message_interviewer for code in config.CLOSING_MESSAGES.keys()):
+                    message_placeholder.markdown(message_interviewer)
+                else:
+                    message_placeholder.empty()
+
             # If no code is in the message, display and store the message
             if not any(
                 code in message_interviewer for code in config.CLOSING_MESSAGES.keys()
             ):
-
-                message_placeholder.markdown(message_interviewer)
+                if api != "mistral":
+                    message_placeholder.markdown(message_interviewer)
                 st.session_state.messages.append(
                     {"role": "assistant", "content": message_interviewer}
                 )
