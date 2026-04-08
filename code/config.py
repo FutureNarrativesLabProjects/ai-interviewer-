@@ -66,7 +66,7 @@ Further details are discussed, for example, in "Qualitative Literacy: A Guide to
 CODES = """Codes:
 
 
-Lastly, there are specific codes that must be used exclusively in designated situations. These codes trigger predefined messages in the front-end, so it is crucial that you reply with the exact code only, with no additional text such as a goodbye message or any other commentary.
+Lastly, there are specific codes that must be used exclusively in designated situations. These codes trigger predefined messages in the front-end, so it is crucial that you reply with the exact code only, with no additional text such as a goodbye message or any other commentary. Do not mention or hint to the respondent that you will be using a code, or that the interview is about to end in any technical way.
 
 Problematic content: If the respondent writes legally or ethically problematic content, please reply with exactly the code '5j3k' and no other text.
 
