@@ -30,9 +30,28 @@ else:
 # Set page title and icon
 st.set_page_config(page_title="Interview", page_icon=config.AVATAR_INTERVIEWER)
 
-# Landing page
+# Initialise session state flags
 if "entered" not in st.session_state:
     st.session_state.entered = False
+if "interview_completed" not in st.session_state:
+    st.session_state.interview_completed = False
+
+# Exit page — shown after interview is fully completed
+if st.session_state.interview_completed:
+    st.markdown(
+        """
+        <div style="text-align: center; padding: 80px 20px;">
+            <h2 style="font-size: 2rem; font-weight: 600; margin-bottom: 1rem;">Thank you for completing the interview</h2>
+            <p style="font-size: 1.15rem; color: #555; max-width: 500px; margin: 0 auto;">
+                Your contribution will help shape TOMA's first AI policy. We really appreciate your time.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.stop()
+
+# Landing page
 
 if not st.session_state.entered:
     landing = st.empty()
@@ -348,17 +367,19 @@ if st.session_state.interview_active:
                     )
 
                     # Store final transcript and time
-                    final_transcript_stored = False
-                    while final_transcript_stored == False:
+                    save_interview_data(
+                        username=st.session_state.username,
+                        transcripts_directory=config.TRANSCRIPTS_DIRECTORY,
+                        times_directory=config.TIMES_DIRECTORY,
+                        final=True,
+                    )
 
-                        save_interview_data(
-                            username=st.session_state.username,
-                            transcripts_directory=config.TRANSCRIPTS_DIRECTORY,
-                            times_directory=config.TIMES_DIRECTORY,
-                            final=True,
-                        )
+                    st.session_state.interview_completed = True
 
-                        final_transcript_stored = check_if_interview_completed(
-                            config.TRANSCRIPTS_DIRECTORY, st.session_state.username
-                        )
-                        time.sleep(0.1)
+# Show continue button after interview completes
+if st.session_state.get("interview_completed") and not st.session_state.get("interview_active"):
+    st.markdown("<br>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 1, 1])
+    with col2:
+        if st.button("Continue", use_container_width=True, type="primary"):
+            st.rerun()
