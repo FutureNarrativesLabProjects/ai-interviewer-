@@ -137,9 +137,9 @@ Contact us at info@futurenarrativeslab.org
         st.markdown("<br><br>", unsafe_allow_html=True)
 
         # Logos — small row at bottom, centred
-        col1, col2, col3, col4 = st.columns([2, 1, 1, 2])
+        col1, col2, col3, col4 = st.columns([1.5, 1.5, 1.5, 1.5])
         with col2:
-            st.image(os.path.join(img_dir, "logo-london-play.png"), use_container_width=True)
+            st.image(os.path.join(img_dir, "logo-london-play.gif"), use_container_width=True)
         with col3:
             st.image(os.path.join(img_dir, "logo-fnl.png"), use_container_width=True)
     st.stop()
