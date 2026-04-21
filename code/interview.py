@@ -70,6 +70,11 @@ if not st.session_state.entered:
             div[data-testid="stRadio"] > div {
                 justify-content: center;
             }
+            div[data-testid="stImage"] {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
             </style>
             """,
             unsafe_allow_html=True,
@@ -137,11 +142,11 @@ Contact us at info@futurenarrativeslab.org
         st.markdown("<br><br>", unsafe_allow_html=True)
 
         # Logos — small row at bottom, centred
-        col1, col2, col3, col4, col5 = st.columns([1.5, 1, 1, 1, 1.5])
+        col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 2])
         with col2:
             st.image(os.path.join(img_dir, "logo-kings.png"), use_container_width=True)
         with col3:
-            st.image(os.path.join(img_dir, "logo-london-play.jpg"), use_container_width=True)
+            st.image(os.path.join(img_dir, "logo-london-play.gif"), use_container_width=True)
         with col4:
             st.image(os.path.join(img_dir, "logo-fnl.png"), use_container_width=True)
     st.stop()
