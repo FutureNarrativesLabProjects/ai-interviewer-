@@ -191,15 +191,23 @@ if not st.session_state.demographics_submitted:
         submitted = st.form_submit_button("Begin Interview", type="primary")
 
     if submitted:
-        st.session_state.demographics = {
-            "participant_code": participant_code,
-            "age": age,
-            "gender": gender,
-            "location": location,
-            "ethnicity": ethnicity,
-        }
-        st.session_state.demographics_submitted = True
-        st.rerun()
+        valid_codes = [
+            c.strip() for c in st.secrets.get("PARTICIPANT_CODES", "").split(",") if c.strip()
+        ]
+        if not participant_code:
+            st.error("Please enter your participant code.")
+        elif valid_codes and participant_code not in valid_codes:
+            st.error("That code wasn't recognised. Please check your code and try again.")
+        else:
+            st.session_state.demographics = {
+                "participant_code": participant_code,
+                "age": age,
+                "gender": gender,
+                "location": location,
+                "ethnicity": ethnicity,
+            }
+            st.session_state.demographics_submitted = True
+            st.rerun()
     st.stop()
 
 # Build effective system prompt based on language
