@@ -33,6 +33,10 @@ st.set_page_config(page_title="Interview", page_icon=config.AVATAR_INTERVIEWER)
 # Initialise session state flags
 if "entered" not in st.session_state:
     st.session_state.entered = False
+if "demographics_submitted" not in st.session_state:
+    st.session_state.demographics_submitted = False
+if "demographics" not in st.session_state:
+    st.session_state.demographics = {}
 if "interview_completed" not in st.session_state:
     st.session_state.interview_completed = False
 if "language" not in st.session_state:
@@ -70,49 +74,132 @@ if st.session_state.interview_completed:
 if not st.session_state.entered:
     landing = st.empty()
     with landing.container():
-        # Logos
-        img_dir = os.path.join(os.path.dirname(__file__), "images")
-        col1, col2, col3 = st.columns([1, 1, 1])
-        with col1:
-            st.image(os.path.join(img_dir, "logo-kings.png"), use_container_width=True)
-        with col2:
-            st.image(os.path.join(img_dir, "logo-pembroke.svg"), use_container_width=True)
-        with col3:
-            st.image(os.path.join(img_dir, "logo-fnl.png"), use_container_width=True)
-
-        st.markdown("<br>", unsafe_allow_html=True)
-
+        # Custom CSS — bigger button, centred radio buttons
         st.markdown(
             """
-            <div style="text-align: center;">
-                <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.75rem;">Walworth Road Opportunity — Community Interview</h2>
-                <p style="font-size: 1.1rem; color: #555; max-width: 520px; margin: 0 auto 2rem;">
-                    This interview is part of Pembroke House's research into what community ownership could look like for a new food space in Walworth.
-                </p>
-            </div>
+            <style>
+            div[data-testid="stButton"] > button {
+                height: 3.2rem;
+                font-size: 1.1rem;
+                font-weight: 600;
+            }
+            div[data-testid="stRadio"] > div {
+                justify-content: center;
+            }
+            </style>
             """,
             unsafe_allow_html=True,
         )
 
+        img_dir = os.path.join(os.path.dirname(__file__), "images")
+
+        # Title
+        st.markdown(
+            "<h2 style='text-align: center; font-size: 1.8rem; font-weight: 600; margin-bottom: 1rem;'>"
+            "Pembroke House: Community Ownership Interview</h2>",
+            unsafe_allow_html=True,
+        )
+
+        # Language selector — above button
+        st.markdown(
+            "<p style='text-align: center; margin-bottom: 0;'>Select language / Seleccione idioma</p>",
+            unsafe_allow_html=True,
+        )
+        language = st.radio("", ["English", "Español"], horizontal=True, label_visibility="hidden")
+        st.session_state.language = language
+
         st.markdown("<br>", unsafe_allow_html=True)
 
-        # Language selector
+        # Button
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            language = st.radio(
-                "Select language / Seleccione idioma",
-                ["English", "Español"],
-                horizontal=True,
-            )
-            st.session_state.language = language
-
-        st.markdown("<br>", unsafe_allow_html=True)
-        col1, col2, col3 = st.columns([1, 1, 1])
-        with col2:
-            if st.button("Enter Interview", use_container_width=True, type="primary"):
+            if st.button("Start the Interview", use_container_width=True, type="primary"):
                 landing.empty()
                 st.session_state.entered = True
                 st.rerun()
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # Data notice
+        st.markdown("**Your data**")
+        st.markdown(
+            """
+- **Anonymous** — no name, email, or personal details are collected at any point
+- **Not used to train AI** — the AI provider does not train its models on your responses
+- **Who sees your responses** — Pembroke House and Future Narratives Lab will receive anonymised findings
+- **Withdrawal** — you can stop at any time before the interview concludes; once complete, responses cannot be individually removed as they are fully anonymous
+"""
+        )
+
+        # Collapsed FAQs
+        with st.expander("More information"):
+            st.markdown(
+                """
+**Is this really anonymous?**
+Yes. The only thing stored alongside your responses is a randomly generated session code — no name, email address, or any personal detail is collected or recorded at any point.
+
+**Will my responses be used to train AI?**
+No. The AI that powers this interview is provided by Mistral AI, a French company based in Paris. As an EU-based provider, Mistral is GDPR compliant and does not train its models on data submitted via its API.
+
+**Who is running this research?**
+Pembroke House, in partnership with Future Narratives Lab and King's College London. The research explores community ownership models for a new community food space on Walworth Road.
+
+**Can I stop partway through?**
+Yes — click the Quit button at any time. If you stop before the interview concludes, your responses will not be recorded.
+
+**Can I have my data deleted?**
+Once the interview is complete, it is not possible to remove your individual responses. Because the data is fully anonymous, there is no way to identify which responses belong to you. Raw interview transcripts will be deleted by 30 June 2026.
+
+**What if I have concerns about AI use?**
+We want to hear that too — your critique is a valid and valuable perspective. You can also contact us at info@futurenarrativeslab.org
+
+**Who do I contact with questions?**
+Contact us at info@futurenarrativeslab.org
+"""
+            )
+
+        st.markdown("<br><br>", unsafe_allow_html=True)
+
+        # Logos — small row at bottom, centred
+        col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 2])
+        with col2:
+            st.image(os.path.join(img_dir, "logo-kings.png"), use_container_width=True)
+        with col3:
+            st.image(os.path.join(img_dir, "logo-pembroke.svg"), use_container_width=True)
+        with col4:
+            st.image(os.path.join(img_dir, "logo-fnl.png"), use_container_width=True)
+    st.stop()
+
+# Pre-interview form
+if not st.session_state.demographics_submitted:
+    st.markdown("### Before we begin")
+    st.markdown("Please fill in a few quick details. This takes less than a minute.")
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    with st.form("demographics_form"):
+        participant_code = st.text_input("Participant code")
+        age = st.selectbox(
+            "Age range",
+            ["Prefer not to say", "Under 18", "18–24", "25–34", "35–44", "45–54", "55–64", "65+"],
+        )
+        gender = st.selectbox(
+            "Gender",
+            ["Prefer not to say", "Woman", "Man", "Non-binary", "Self-describe"],
+        )
+        location = st.text_input("Borough or area you live in")
+        ethnicity = st.text_input("Ethnicity (in your own words)")
+        submitted = st.form_submit_button("Begin Interview", type="primary")
+
+    if submitted:
+        st.session_state.demographics = {
+            "participant_code": participant_code,
+            "age": age,
+            "gender": gender,
+            "location": location,
+            "ethnicity": ethnicity,
+        }
+        st.session_state.demographics_submitted = True
+        st.rerun()
     st.stop()
 
 # Build effective system prompt based on language
@@ -347,11 +434,13 @@ if st.session_state.interview_active:
                     )
 
                     # Store final transcript and save to Google Sheets
+                    completion_status = "Complete" if code == "x7y8" else "Terminated"
                     save_interview_data(
                         username=st.session_state.username,
                         transcripts_directory=config.TRANSCRIPTS_DIRECTORY,
                         times_directory=config.TIMES_DIRECTORY,
                         final=True,
+                        completion_status=completion_status,
                     )
 
                     st.session_state.interview_completed = True

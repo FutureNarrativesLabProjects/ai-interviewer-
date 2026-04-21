@@ -61,17 +61,30 @@ def check_if_interview_completed(directory, username):
         return False
 
 
-def save_to_google_sheets(anonymous_id, start_time, duration):
-    """Save completed interview transcript and metadata to Google Sheets."""
+def save_to_google_sheets(anonymous_id, start_time, duration, demographics, completion_status):
+    """Save completed interview to Google Sheets (three tabs)."""
     try:
         scopes = ["https://www.googleapis.com/auth/spreadsheets"]
         creds = Credentials.from_service_account_info(
             st.secrets["gcp_service_account"], scopes=scopes
         )
         client = gspread.authorize(creds)
-        sheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"]).sheet1
+        spreadsheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"])
 
-        # Format transcript readably, skipping system prompt and silent opening "Hi" trigger
+        participant_code = demographics.get("participant_code", "")
+
+        # Tab 1 — Demographics: shared with client after removing Session ID and Participant Code columns
+        spreadsheet.get_worksheet(0).append_row([
+            anonymous_id,
+            participant_code,
+            demographics.get("age", ""),
+            demographics.get("gender", ""),
+            demographics.get("location", ""),
+            demographics.get("ethnicity", ""),
+            completion_status,
+        ])
+
+        # Tab 2 — Transcripts: shared with client after removing Session ID and Participant Code columns
         lines = []
         for m in st.session_state.messages:
             if m["role"] == "system":
@@ -82,8 +95,9 @@ def save_to_google_sheets(anonymous_id, start_time, duration):
             lines.append(f"{label}:\n{m['content']}")
         transcript_text = "\n\n---\n\n".join(lines)
 
-        sheet.append_row([
+        spreadsheet.get_worksheet(1).append_row([
             anonymous_id,
+            participant_code,
             time.strftime("%d/%m/%Y %H:%M:%S", time.localtime(start_time)),
             f"{duration:.2f}",
             transcript_text,
@@ -99,6 +113,7 @@ def save_interview_data(
     file_name_addition_transcript="",
     file_name_addition_time="",
     final=False,
+    completion_status="Complete",
 ):
     """Write interview data (transcript and time) to disk. On final save, also write to Google Sheets."""
 
@@ -129,5 +144,7 @@ def save_interview_data(
             anonymous_id=st.session_state.get("anonymous_id", username),
             start_time=st.session_state.start_time,
             duration=duration,
+            demographics=st.session_state.get("demographics", {}),
+            completion_status=completion_status,
         )
         st.session_state.sheets_saved = True

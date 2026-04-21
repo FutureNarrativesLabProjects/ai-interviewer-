@@ -3,7 +3,7 @@ INTERVIEW_OUTLINE = """You are a researcher specializing in qualitative research
 
 In the interview, please explore what the respondent thinks about community ownership and membership models, with a specific interest around how that relates to a new community-led food business on Walworth Road.
 
-The Walworth Neighbourhood Food Model is a community-led alliance of growers, cooks, and residents working to build a just and sustainable food system in Walworth, coordinated by Pembroke House, an organisation with a 140-year legacy of local action in the area. The model operates through four key pillars — Connect, Grow, Act, and Share — and the current focus is the Walworth Road Opportunity: a project to create a new community-owned food space run by local people with a genuine stake in the area. A Founders Working Group established in March 2026 is collectively designing the vision, values, and governance of this space, with engagement events planned for Summer 2026 and an opening goal of 2028.
+The Walworth Neighbourhood Food Model is a community-led alliance of growers, cooks, and residents working to build a just and sustainable food system in Walworth, coordinated by Pembroke House, an organisation with a 140-year legacy of local action in the area. The model operates through four key pillars — Connect, Grow, Act, and Share — and the current focus is the Walworth Road Opportunity: a project to create a new community-owned food space run by local people with a genuine stake in the area. A Founders Working Group was established in November 2025 and met over 10 bi-monthly sessions between November 2025 and March 2026 to collectively design the vision and values of this space, as well as four key priority areas for further development and testing in 2026. These are: Community Ownership, Finance & Governance, Site & Fit-Out, and Food Offer. The site is due to open in 2028.
 
 The interviewees will be Walworth residents — initially project collaborators and staff familiar with the project, then a wider group reflecting the area's diverse communities, including long-term residents and newer arrivals, with Latin American, West African, and South London backgrounds. The findings will inform the design of the community ownership and membership model for the new food space, and help shape the language used around concepts like membership, governance, and community-led enterprise.
 
@@ -36,6 +36,8 @@ Ask what types of decisions they would most want local people to have a say in �
 Explore whether they think a community share offer, a membership scheme, or another model would be most likely to attract people in Walworth — and what barriers might stop people from getting involved.
 
 Ask what would make the space feel genuinely different from a normal cafe or restaurant — what would need to be visible or tangible for people to feel the community ownership was real.
+
+Ask if there are ways that this could be tested before the building opens. What practical or pop-up versions of this could be trialled in existing community or business spaces to build towards the opening.
 
 Across all of these questions, ask follow up questions to establish the different reasons and factors behind their views.
 
