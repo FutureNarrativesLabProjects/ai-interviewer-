@@ -7,6 +7,7 @@ from utils import (
     save_interview_data,
 )
 import os
+import base64
 import config
 
 # Load API library
@@ -70,12 +71,7 @@ if not st.session_state.entered:
             div[data-testid="stRadio"] > div {
                 justify-content: center;
             }
-            div[data-testid="stImage"] {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            </style>
+</style>
             """,
             unsafe_allow_html=True,
         )
@@ -142,13 +138,24 @@ Contact us at info@futurenarrativeslab.org
         st.markdown("<br><br>", unsafe_allow_html=True)
 
         # Logos — small row at bottom, centred
-        col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 2])
-        with col2:
-            st.image(os.path.join(img_dir, "logo-kings.png"), use_container_width=True)
-        with col3:
-            st.image(os.path.join(img_dir, "logo-london-play.gif"), use_container_width=True)
-        with col4:
-            st.image(os.path.join(img_dir, "logo-fnl.png"), use_container_width=True)
+        def img_b64(path, mime):
+            with open(path, "rb") as f:
+                return base64.b64encode(f.read()).decode(), mime
+
+        kings_b64, kings_mime = img_b64(os.path.join(img_dir, "logo-kings.png"), "image/png")
+        lp_b64, lp_mime = img_b64(os.path.join(img_dir, "logo-london-play.gif"), "image/gif")
+        fnl_b64, fnl_mime = img_b64(os.path.join(img_dir, "logo-fnl.png"), "image/png")
+
+        st.markdown(
+            f"""
+            <div style="display:flex; justify-content:center; align-items:center; gap:40px; margin-top:10px;">
+                <img src="data:{kings_mime};base64,{kings_b64}" style="height:55px; width:auto; border-radius:0;">
+                <img src="data:{lp_mime};base64,{lp_b64}" style="height:55px; width:auto; border-radius:0;">
+                <img src="data:{fnl_mime};base64,{fnl_b64}" style="height:55px; width:auto; border-radius:0;">
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
     st.stop()
 
 # Pre-interview form
