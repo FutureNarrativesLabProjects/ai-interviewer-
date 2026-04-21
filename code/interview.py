@@ -151,7 +151,7 @@ Contact us at info@futurenarrativeslab.org
             <div style="display:flex; justify-content:center; align-items:center; gap:40px; margin-top:10px;">
                 <img src="data:{kings_mime};base64,{kings_b64}" style="height:65px; width:auto; border-radius:0;">
                 <img src="data:{lp_mime};base64,{lp_b64}" style="height:55px; width:auto; border-radius:0;">
-                <img src="data:{fnl_mime};base64,{fnl_b64}" style="height:94px; width:auto; border-radius:0;">
+                <img src="data:{fnl_mime};base64,{fnl_b64}" style="height:113px; width:auto; border-radius:0;">
             </div>
             """,
             unsafe_allow_html=True,
