@@ -39,35 +39,19 @@ if "demographics" not in st.session_state:
     st.session_state.demographics = {}
 if "interview_completed" not in st.session_state:
     st.session_state.interview_completed = False
-if "language" not in st.session_state:
-    st.session_state.language = "English"
-
 # Exit page — shown after interview is fully completed
 if st.session_state.interview_completed:
-    if st.session_state.language == "Español":
-        st.markdown(
-            """
-            <div style="text-align: center; padding: 80px 20px;">
-                <h2 style="font-size: 2rem; font-weight: 600; margin-bottom: 1rem;">Muchas gracias</h2>
-                <p style="font-size: 1.15rem; color: #555; max-width: 500px; margin: 0 auto;">
-                    Ha completado la entrevista. Su contribución ayudará a dar forma a la Oportunidad de la Calle Walworth. Apreciamos mucho su tiempo.
-                </p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    else:
-        st.markdown(
-            """
-            <div style="text-align: center; padding: 80px 20px;">
-                <h2 style="font-size: 2rem; font-weight: 600; margin-bottom: 1rem;">Thank you for completing the interview</h2>
-                <p style="font-size: 1.15rem; color: #555; max-width: 500px; margin: 0 auto;">
-                    Your contribution will help shape the Walworth Road Opportunity. We really appreciate your time.
-                </p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+    st.markdown(
+        """
+        <div style="text-align: center; padding: 80px 20px;">
+            <h2 style="font-size: 2rem; font-weight: 600; margin-bottom: 1rem;">Thank you for completing the interview</h2>
+            <p style="font-size: 1.15rem; color: #555; max-width: 500px; margin: 0 auto;">
+                Your reflections will play an important part in shaping London Play's next strategy. We really appreciate your time.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     st.stop()
 
 # Landing page
@@ -96,17 +80,9 @@ if not st.session_state.entered:
         # Title
         st.markdown(
             "<h2 style='text-align: center; font-size: 1.8rem; font-weight: 600; margin-bottom: 1rem;'>"
-            "Pembroke House: Community Ownership Interview</h2>",
+            "London Play Strategy Interview</h2>",
             unsafe_allow_html=True,
         )
-
-        # Language selector — above button
-        st.markdown(
-            "<p style='text-align: center; margin-bottom: 0;'>Select language / Seleccione idioma</p>",
-            unsafe_allow_html=True,
-        )
-        language = st.radio("", ["English", "Español"], horizontal=True, label_visibility="hidden")
-        st.session_state.language = language
 
         st.markdown("<br>", unsafe_allow_html=True)
 
@@ -126,7 +102,7 @@ if not st.session_state.entered:
             """
 - **Anonymous** — no name, email, or personal details are collected at any point
 - **Not used to train AI** — the AI provider does not train its models on your responses
-- **Who sees your responses** — Pembroke House and Future Narratives Lab will receive anonymised findings
+- **Who sees your responses** — London Play and Future Narratives Lab will receive anonymised findings
 - **Withdrawal** — you can stop at any time before the interview concludes; once complete, responses cannot be individually removed as they are fully anonymous
 """
         )
@@ -142,13 +118,13 @@ Yes. The only thing stored alongside your responses is a randomly generated sess
 No. The AI that powers this interview is provided by Mistral AI, a French company based in Paris. As an EU-based provider, Mistral is GDPR compliant and does not train its models on data submitted via its API.
 
 **Who is running this research?**
-Pembroke House, in partnership with Future Narratives Lab and King's College London. The research explores community ownership models for a new community food space on Walworth Road.
+This interview is run by Future Narratives Lab on behalf of London Play, to gather trustee reflections ahead of the strategy away day.
 
 **Can I stop partway through?**
 Yes — click the Quit button at any time. If you stop before the interview concludes, your responses will not be recorded.
 
 **Can I have my data deleted?**
-Once the interview is complete, it is not possible to remove your individual responses. Because the data is fully anonymous, there is no way to identify which responses belong to you. Raw interview transcripts will be deleted by 30 June 2026.
+Once the interview is complete, it is not possible to remove your individual responses. Because the data is fully anonymous, there is no way to identify which responses belong to you.
 
 **What if I have concerns about AI use?**
 We want to hear that too — your critique is a valid and valuable perspective. You can also contact us at info@futurenarrativeslab.org
@@ -161,12 +137,10 @@ Contact us at info@futurenarrativeslab.org
         st.markdown("<br><br>", unsafe_allow_html=True)
 
         # Logos — small row at bottom, centred
-        col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 2])
+        col1, col2, col3, col4 = st.columns([2, 1, 1, 2])
         with col2:
-            st.image(os.path.join(img_dir, "logo-kings.png"), use_container_width=True)
+            st.image(os.path.join(img_dir, "logo-london-play.png"), use_container_width=True)
         with col3:
-            st.image(os.path.join(img_dir, "logo-pembroke.svg"), use_container_width=True)
-        with col4:
             st.image(os.path.join(img_dir, "logo-fnl.png"), use_container_width=True)
     st.stop()
 
@@ -210,15 +184,7 @@ if not st.session_state.demographics_submitted:
             st.rerun()
     st.stop()
 
-# Build effective system prompt based on language
-if st.session_state.language == "Español":
-    effective_system_prompt = config.SYSTEM_PROMPT + (
-        "\n\nIMPORTANT: This participant has chosen to conduct the interview in Spanish. "
-        "Please conduct the entire interview in Spanish (Español) from your very first message. "
-        "All your questions, follow-ups, and responses must be in Spanish."
-    )
-else:
-    effective_system_prompt = config.SYSTEM_PROMPT
+effective_system_prompt = config.SYSTEM_PROMPT
 
 # Check if usernames and logins are enabled
 if config.LOGINS:
