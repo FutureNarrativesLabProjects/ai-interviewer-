@@ -7,6 +7,7 @@ from utils import (
     save_interview_data,
 )
 import os
+import base64
 import config
 
 # Load API library
@@ -60,32 +61,30 @@ if st.session_state.interview_completed:
 if not st.session_state.entered:
     landing = st.empty()
     with landing.container():
-        # Logos
-        img_dir = os.path.join(os.path.dirname(__file__), "images")
-        col1, col2, col3 = st.columns([1, 1, 1])
-        with col1:
-            st.image(os.path.join(img_dir, "logo-kings.png"), use_container_width=True)
-        with col2:
-            st.image(os.path.join(img_dir, "logo-toma.webp"), use_container_width=True)
-        with col3:
-            st.image(os.path.join(img_dir, "logo-fnl.png"), use_container_width=True)
-
-        st.markdown("<br>", unsafe_allow_html=True)
-
         st.markdown(
             """
-            <div style="text-align: center;">
-                <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.75rem;">TOMA AI Policy Interview</h2>
-                <p style="font-size: 1.1rem; color: #555; max-width: 520px; margin: 0 auto 2rem;">
-                    This interview is part of TOMA's process of developing its first AI policy.
-                </p>
-            </div>
+            <style>
+            div[data-testid="stButton"] > button {
+                height: 3.2rem;
+                font-size: 1.1rem;
+                font-weight: 600;
+            }
+            </style>
             """,
             unsafe_allow_html=True,
         )
 
+        img_dir = os.path.join(os.path.dirname(__file__), "images")
+
+        st.markdown(
+            "<h2 style='text-align: center; font-size: 1.8rem; font-weight: 600; margin-bottom: 1rem;'>"
+            "TOMA AI Policy Interview</h2>",
+            unsafe_allow_html=True,
+        )
+
         st.markdown("<br>", unsafe_allow_html=True)
-        col1, col2, col3 = st.columns([1, 1, 1])
+
+        col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
             if st.button("Enter Interview", use_container_width=True, type="primary"):
                 landing.empty()
@@ -131,6 +130,26 @@ Contact us at info@futurenarrativeslab.org
             )
 
         st.markdown("<br><br>", unsafe_allow_html=True)
+
+        # Logos — small row at bottom, centred
+        def img_b64(path, mime):
+            with open(path, "rb") as f:
+                return base64.b64encode(f.read()).decode(), mime
+
+        kings_b64, kings_mime = img_b64(os.path.join(img_dir, "logo-kings.png"), "image/png")
+        toma_b64, toma_mime = img_b64(os.path.join(img_dir, "logo-toma.webp"), "image/webp")
+        fnl_b64, fnl_mime = img_b64(os.path.join(img_dir, "logo-fnl.png"), "image/png")
+
+        st.markdown(
+            f"""
+            <div style="display:flex; justify-content:center; align-items:center; gap:40px; margin-top:10px;">
+                <img src="data:{kings_mime};base64,{kings_b64}" style="height:65px; width:auto; border-radius:0;">
+                <img src="data:{toma_mime};base64,{toma_b64}" style="height:65px; width:auto; border-radius:0;">
+                <img src="data:{fnl_mime};base64,{fnl_b64}" style="height:113px; width:auto; border-radius:0;">
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
     st.stop()
 
 # Pre-interview form
