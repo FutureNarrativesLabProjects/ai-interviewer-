@@ -114,7 +114,7 @@ Yes. The only thing stored alongside your responses is a randomly generated sess
 No. The AI that powers this interview is provided by Mistral AI, a French company based in Paris. As an EU-based provider, Mistral is GDPR compliant and does not train its models on data submitted via its API.
 
 **Who is running this research?**
-TOMA, in partnership with Future Narratives Lab and King's College London. The research is part of TOMA's process of developing its first AI policy.
+This interview is run by Future Narratives Lab, in partnership with King's College London, for TOMA, as part of their process of developing their first AI policy.
 
 **Can I stop partway through?**
 Yes — click the **Quit button** at any time. This will end the interview and your responses will not be recorded. Note: if you tell the interviewer you wish to stop, the conversation will be saved as a completed interview.
