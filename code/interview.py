@@ -119,13 +119,13 @@ Yes. The only thing stored alongside your responses is a randomly generated sess
 No. The AI that powers this interview is provided by Mistral AI, a French company based in Paris. As an EU-based provider, Mistral is GDPR compliant and does not train its models on data submitted via its API.
 
 **Who is running this research?**
-This interview is run by Future Narratives Lab on behalf of London Play, to gather trustee reflections ahead of the strategy away day.
+This interview is run by London Play, in partnership with Future Narratives Lab and King's College London, to gather trustee reflections ahead of the strategy away day.
 
 **Can I stop partway through?**
 Yes — click the **Quit button** at any time. This will end the interview and your responses will not be recorded. Note: if you tell the interviewer you wish to stop, the conversation will be saved as a completed interview.
 
 **Can I have my data deleted?**
-Once the interview is complete, it is not possible to remove your individual responses. Because the data is fully anonymous, there is no way to identify which responses belong to you.
+Once the interview is complete, it is not possible to remove your individual responses. Because the data is fully anonymous, there is no way to identify which responses belong to you. Anonymised findings and analysis drawn from the research may be retained and used in published outputs.
 
 **What if I have concerns about AI use?**
 We want to hear that too — your critique is a valid and valuable perspective. You can also contact us at info@futurenarrativeslab.org
