@@ -33,6 +33,10 @@ st.set_page_config(page_title="Interview", page_icon=config.AVATAR_INTERVIEWER)
 # Initialise session state flags
 if "entered" not in st.session_state:
     st.session_state.entered = False
+if "demographics_submitted" not in st.session_state:
+    st.session_state.demographics_submitted = False
+if "demographics" not in st.session_state:
+    st.session_state.demographics = {}
 if "interview_completed" not in st.session_state:
     st.session_state.interview_completed = False
 
@@ -87,6 +91,86 @@ if not st.session_state.entered:
                 landing.empty()
                 st.session_state.entered = True
                 st.rerun()
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        st.markdown("**Your data**")
+        st.markdown(
+            """
+- **Anonymous** — no name, email, or personal details are collected at any point
+- **Not used to train AI** — the AI provider does not train its models on your responses
+- **Who sees your responses** — TOMA and Future Narratives Lab will receive anonymised findings
+- **Withdrawal** — you can stop at any time before the interview concludes; once complete, responses cannot be individually removed as they are fully anonymous
+"""
+        )
+
+        with st.expander("More information"):
+            st.markdown(
+                """
+**Is this really anonymous?**
+Yes. The only thing stored alongside your responses is a randomly generated session code — no name, email address, or any personal detail is collected or recorded at any point.
+
+**Will my responses be used to train AI?**
+No. The AI that powers this interview is provided by Mistral AI, a French company based in Paris. As an EU-based provider, Mistral is GDPR compliant and does not train its models on data submitted via its API.
+
+**Who is running this research?**
+TOMA, in partnership with Future Narratives Lab and King's College London. The research is part of TOMA's process of developing its first AI policy.
+
+**Can I stop partway through?**
+Yes — click the **Quit button** at any time. This will end the interview and your responses will not be recorded. Note: if you tell the interviewer you wish to stop, the conversation will be saved as a completed interview.
+
+**Can I have my data deleted?**
+Once the interview is complete, it is not possible to remove your individual responses. Because the data is fully anonymous, there is no way to identify which responses belong to you.
+
+**What if I have concerns about AI use?**
+We want to hear that too — your critique is a valid and valuable perspective. You can also contact us at info@futurenarrativeslab.org
+
+**Who do I contact with questions?**
+Contact us at info@futurenarrativeslab.org
+"""
+            )
+
+        st.markdown("<br><br>", unsafe_allow_html=True)
+    st.stop()
+
+# Pre-interview form
+if not st.session_state.demographics_submitted:
+    st.markdown("### Before we begin")
+    st.markdown("Please fill in a few quick details. This takes less than a minute.")
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    with st.form("demographics_form"):
+        participant_code = st.text_input("Participant code")
+        age = st.selectbox(
+            "Age range",
+            ["Prefer not to say", "Under 18", "18–24", "25–34", "35–44", "45–54", "55–64", "65+"],
+        )
+        gender = st.selectbox(
+            "Gender",
+            ["Prefer not to say", "Woman", "Man", "Non-binary", "Self-describe"],
+        )
+        location = st.text_input("Borough or area you live in")
+        ethnicity = st.text_input("Ethnicity (in your own words)")
+        submitted = st.form_submit_button("Begin Interview", type="primary")
+
+    if submitted:
+        valid_codes = [
+            c.strip() for c in st.secrets.get("PARTICIPANT_CODES", "").split(",") if c.strip()
+        ]
+        if not participant_code:
+            st.error("Please enter your participant code.")
+        elif valid_codes and participant_code not in valid_codes:
+            st.error("That code wasn't recognised. Please check your code and try again.")
+        else:
+            st.session_state.demographics = {
+                "participant_code": participant_code,
+                "age": age,
+                "gender": gender,
+                "location": location,
+                "ethnicity": ethnicity,
+            }
+            st.session_state.demographics_submitted = True
+            st.rerun()
     st.stop()
 
 # Check if usernames and logins are enabled
@@ -367,11 +451,13 @@ if st.session_state.interview_active:
                     )
 
                     # Store final transcript and time
+                    completion_status = "Complete" if code == "x7y8" else "Terminated"
                     save_interview_data(
                         username=st.session_state.username,
                         transcripts_directory=config.TRANSCRIPTS_DIRECTORY,
                         times_directory=config.TIMES_DIRECTORY,
                         final=True,
+                        completion_status=completion_status,
                     )
 
                     st.session_state.interview_completed = True
