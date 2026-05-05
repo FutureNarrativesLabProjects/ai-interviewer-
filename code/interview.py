@@ -145,7 +145,7 @@ No. The AI that powers this interview is provided by Mistral AI, a French compan
 Pembroke House, in partnership with Future Narratives Lab and King's College London. The research explores community ownership models for a new community food space on Walworth Road.
 
 **Can I stop partway through?**
-Yes — click the Quit button at any time. If you stop before the interview concludes, your responses will not be recorded.
+Yes — click the **Quit button** at any time. This will end the interview and your responses will not be recorded. Note: if you tell the interviewer you wish to stop, the conversation will be saved as a completed interview.
 
 **Can I have my data deleted?**
 Once the interview is complete, it is not possible to remove your individual responses. Because the data is fully anonymous, there is no way to identify which responses belong to you. Raw interview transcripts will be deleted by 30 June 2026.
