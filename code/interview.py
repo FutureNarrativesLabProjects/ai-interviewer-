@@ -86,7 +86,7 @@ if not st.session_state.entered:
 
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            if st.button("Enter Interview", use_container_width=True, type="primary"):
+            if st.button("Start the Interview", use_container_width=True, type="primary"):
                 landing.empty()
                 st.session_state.entered = True
                 st.rerun()
@@ -119,7 +119,7 @@ This interview is run by Future Narratives Lab, in partnership with King's Colle
 Yes — click the **Quit button** at any time. This will end the interview and your responses will not be recorded. Note: if you tell the interviewer you wish to stop, the conversation will be saved as a completed interview.
 
 **Can I have my data deleted?**
-Once the interview is complete, it is not possible to remove your individual responses. Because the data is fully anonymous, there is no way to identify which responses belong to you.
+Once the interview is complete, it is not possible to remove your individual responses. Because the data is fully anonymous, there is no way to identify which responses belong to you. Raw interview transcripts will be deleted by 30 September 2026. Anonymised findings and analysis drawn from the research may be retained and used in published outputs.
 
 **What if I have concerns about AI use?**
 We want to hear that too — your critique is a valid and valuable perspective. You can also contact us at info@futurenarrativeslab.org
