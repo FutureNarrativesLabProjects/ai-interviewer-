@@ -156,6 +156,14 @@ Contact us at info@futurenarrativeslab.org
             """,
             unsafe_allow_html=True,
         )
+
+        st.markdown(
+            """<p style="text-align:center; font-size:0.72rem; color:#bbb; margin-top:20px;">
+            Built by <a href="https://futurenarrativeslab.org" style="color:#bbb;">Future Narratives Lab</a> &middot;
+            Source licensed under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" style="color:#bbb;">PolyForm Noncommercial 1.0.0</a> &middot;
+            <a href="https://github.com/FutureNarrativesLabProjects/ai-interviewer-" style="color:#bbb;">View on GitHub</a></p>""",
+            unsafe_allow_html=True,
+        )
     st.stop()
 
 # Pre-interview form
@@ -184,7 +192,7 @@ if not st.session_state.demographics_submitted:
         ]
         if not participant_code:
             st.error("Please enter your participant code.")
-        elif valid_codes and participant_code not in valid_codes:
+        elif not valid_codes or participant_code not in valid_codes:
             st.error("That code wasn't recognised. Please check your code and try again.")
         else:
             st.session_state.demographics = {
