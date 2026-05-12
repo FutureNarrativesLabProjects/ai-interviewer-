@@ -89,9 +89,21 @@ if not st.session_state.entered:
     st.markdown("<br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
+        access_code = st.text_input("Access code", type="password", label_visibility="collapsed", placeholder="Enter access code")
         if st.button("Enter Interview", use_container_width=True, type="primary"):
-            st.session_state.entered = True
-            st.rerun()
+            if access_code.strip() == st.secrets.get("PARTICIPANT_CODES", ""):
+                st.session_state.entered = True
+                st.rerun()
+            else:
+                st.error("Code not recognised. Please check your code and try again.")
+
+    st.markdown(
+        """<p style="text-align:center; font-size:0.72rem; color:#bbb; margin-top:40px;">
+        Built by <a href="https://futurenarrativeslab.org" style="color:#bbb;">Future Narratives Lab</a> &middot;
+        Source licensed under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" style="color:#bbb;">PolyForm Noncommercial 1.0.0</a> &middot;
+        <a href="https://github.com/FutureNarrativesLabProjects/ai-interviewer-" style="color:#bbb;">View on GitHub</a></p>""",
+        unsafe_allow_html=True,
+    )
     st.stop()
 
 # Check if usernames and logins are enabled
