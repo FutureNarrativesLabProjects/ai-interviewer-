@@ -24,65 +24,31 @@ else:
 # Set page title and icon
 st.set_page_config(page_title="Interview", page_icon=config.AVATAR_INTERVIEWER)
 
-# Landing page
+# Access code gate
 if "entered" not in st.session_state:
     st.session_state.entered = False
 
 if not st.session_state.entered:
-    st.markdown(
-        """
-        <style>
-        .welcome-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-            text-align: center;
-        }
-        .welcome-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .welcome-subtitle {
-            font-size: 1.3rem;
-            color: #666;
-            margin-bottom: 40px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown("<div class='welcome-container'>", unsafe_allow_html=True)
-    st.markdown("<div class='welcome-title'>Welcome to the Future Narratives Lab AI Interviewer</div>", unsafe_allow_html=True)
-    st.markdown("<div class='welcome-subtitle'>We are excited to meet you and hear your story</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    st.divider()
-
-    with st.expander("Before you begin — how your data is used"):
-        st.markdown(
-            """
-**What is collected:** Your typed responses and the AI's questions (a full transcript), plus the time and duration of your interview. No name, email, or device data is collected unless you share it in your answers.
-
-**How the AI works:** Your responses are sent to Anthropic's Claude AI in real time to generate interview questions. This is processed on Anthropic's servers according to their [Privacy Policy](https://www.anthropic.com/legal/privacy-policy).
-
-**Who can see your data:** Only the Future Narratives Lab research team. Transcripts are not published or shared with third parties. Results are anonymised.
-
-**Your rights:** You can stop at any time using the Quit button. To request deletion of your data after the interview, contact the research team.
-
-By clicking **Enter Interview** below you confirm you have read this information and agree to participate.
-            """
-        )
-
-    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("<br><br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
+        access_code = st.text_input("Access code", type="password", label_visibility="collapsed", placeholder="Enter access code")
         if st.button("Enter Interview", use_container_width=True, type="primary"):
-            st.session_state.entered = True
-            st.rerun()
+            valid_codes = [
+                c.strip() for c in st.secrets.get("PARTICIPANT_CODES", "").split(",") if c.strip()
+            ]
+            if not valid_codes or access_code.strip() not in valid_codes:
+                st.error("Code not recognised. Please check your code and try again.")
+            else:
+                st.session_state.entered = True
+                st.rerun()
+    st.markdown(
+        """<p style="text-align:center; font-size:0.72rem; color:#bbb; margin-top:40px;">
+        Built by <a href="https://futurenarrativeslab.org" style="color:#bbb;">Future Narratives Lab</a> &middot;
+        Source licensed under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" style="color:#bbb;">PolyForm Noncommercial 1.0.0</a> &middot;
+        <a href="https://github.com/FutureNarrativesLabProjects/ai-interviewer-" style="color:#bbb;">View on GitHub</a></p>""",
+        unsafe_allow_html=True,
+    )
     st.stop()
 
 # Check if usernames and logins are enabled
