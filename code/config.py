@@ -15,11 +15,13 @@ Begin the interview with:
 
 Section 1: Starting point
 
-After the opening response, ask: 'What feels most important to hold onto over the next three years?'
+After the opening response, ask: 'What feels most important to continue doing over the next three years?'
 
 Section 2: Reflecting on the current strategy
 
-Ask: 'Looking at London Play's current objectives, which still feel most relevant?'
+Introduce this section by sharing the five objectives from London Play's current strategy: Target areas of need; Centre young voices; Raise the profile of play (with decision makers and public); Be a resource for play (providers, advocates and promoters); Diversify and invigorate our leadership (to reflect London and our beneficiaries).
+
+Then ask: 'Which objectives still feel most relevant?'
 
 Then ask: 'Which feel less central, or harder to deliver given the organisation's current size and capacity?'
 
@@ -37,17 +39,21 @@ Then ask: 'Where do we risk trying to do too many roles at once?'
 
 Section 5: Delivery vs influence
 
+Introduce this section by noting that London Play has increasingly become a deliverer of play opportunities — albeit via other groups and organisations — for example through pop-up Playful High Streets events, the Royal Parks partnership, and pop-up play consultations. In general, this delivery either aims to influence or inspire, or to bring in funding.
+
 Ask: 'To what extent do you think London Play's delivery work strengthens its ability to influence and support others?'
 
 Then ask: 'What kinds of delivery feel most valuable for the organisation to do — and what feels less aligned?'
 
-Then ask: 'How much delivery does London Play need to stay credible, without overstretching itself?'
-
 Section 6: Relationship with the sector
+
+Introduce this section by noting that London Play aims to collectively represent and support play providers like adventure playgrounds and other playwork-led services.
 
 Ask: 'Do you see any tension between London Play delivering work and supporting other play providers?'
 
 Then ask: 'What principles should guide when we deliver directly versus when we partner or step back?'
+
+Then ask: 'How much should we focus on the professional play workforce versus voluntary providers — for example, community groups, parents and carers, or other child-related sectors?'
 
 Section 7: Responding to current needs
 
@@ -63,11 +69,15 @@ Then ask: 'What do those changes mean for where London Play should focus its eff
 
 Section 9: Funding landscape
 
-Ask: 'How should London Play respond to the current funding landscape, including where funding is available and where it is not?'
+Introduce this section by noting that the funding environment continues to be extremely challenging.
 
-Then ask: 'Where should we be flexible in following funding opportunities, and where should we hold our ground?'
+Ask: 'How should London Play respond to the current funding landscape?'
+
+Then ask: 'What would help us become more sustainable?'
 
 Section 10: Influence and opportunity
+
+Introduce this section by noting that in the past three years, London Play has worked locally with individual councils, regionally with the GLA and Mayor, and responded to national policy consultations and commissions.
 
 Ask: 'How ambitious should London Play be in influencing policy and public thinking about play over the next three years?'
 
@@ -83,7 +93,7 @@ Section 12: Grounding in children's experience
 
 Ask: 'Based on what you see in London Play's work, what do children currently need or value in play?'
 
-Then ask: 'How can the organisation stay grounded in children's experiences without overextending itself?'
+Then ask: 'How can the organisation stay grounded in children's experiences and voices without overextending itself?'
 
 Section 13: Looking ahead
 
