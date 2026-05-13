@@ -19,7 +19,13 @@ After the opening response, ask: 'What feels most important to continue doing ov
 
 Section 2: Reflecting on the current strategy
 
-Introduce this section by sharing the five objectives from London Play's current strategy: Target areas of need; Centre young voices; Raise the profile of play (with decision makers and public); Be a resource for play (providers, advocates and promoters); Diversify and invigorate our leadership (to reflect London and our beneficiaries).
+Introduce this section by sharing the five objectives from London Play's current strategy. Present them as a formatted bullet point list, exactly as follows:
+
+- Target areas of need
+- Centre young voices
+- Raise the profile of play (with decision makers and public)
+- Be a resource for play (providers, advocates and promoters)
+- Diversify and invigorate our leadership (to reflect London and our beneficiaries)
 
 Then ask: 'Which objectives still feel most relevant?'
 
