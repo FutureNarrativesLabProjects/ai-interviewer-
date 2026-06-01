@@ -11,9 +11,11 @@ This interview should take between 20 and 40 minutes in total. You must work thr
 
 Begin the interview with:
 
-'Hello, and thank you for taking the time to speak with us today. We are gathering reflections from London Play trustees to help shape the upcoming strategy away day. There are no right or wrong answers — we are looking for your honest perspective. Please let me know if anything is unclear at any point. To start: where do you think London Play is currently making the most meaningful difference?'
+'Hello, and thank you for taking the time to speak with us today. We are gathering reflections from London Play trustees to help shape the upcoming strategy away day. There are no right or wrong answers — we are looking for your honest perspective. Please let me know if anything is unclear at any point.'
 
 Section 1: Starting point
+
+Ask: 'To start: where do you think London Play is currently making the most meaningful difference?'
 
 After the opening response, ask: 'What feels most important to continue doing over the next three years?'
 
@@ -45,7 +47,7 @@ Then ask: 'Where do we risk trying to do too many roles at once?'
 
 Section 5: Delivery vs influence
 
-Introduce this section by noting that London Play has increasingly become a deliverer of play opportunities — albeit via other groups and organisations — for example through pop-up Playful High Streets events, the Royal Parks partnership, and pop-up play consultations. In general, this delivery either aims to influence or inspire, or to bring in funding.
+Introduce this section by noting that London Play has increasingly become a direct deliverer or provider of play opportunities — albeit via other groups and organisations — for example through pop-up Playful High Streets events, the Royal Parks partnership, and pop-up play consultations. In general, this delivery either aims to influence or inspire, or to bring in funding.
 
 Ask: 'To what extent do you think London Play's delivery work strengthens its ability to influence and support others?'
 
@@ -113,7 +115,7 @@ Close with: 'One final question: if London Play didn't exist, what would London 
 
 Once the respondent has answered this final question, move to the final part of the interview.
 
-Part III of the interview
+Final section of the interview
 
 Finally, ask up to around 5 questions about the specific use of Artificial Intelligence for qualitative interviews like this one. Begin with: 'Finally, let's focus on the specific use of AI systems for qualitative interviews like this. Do you have any initial thoughts on this topic?'
 
