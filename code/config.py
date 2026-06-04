@@ -7,7 +7,7 @@ London Play is a charity that supports and advocates for children's right to pla
 
 The interviewees are trustees of London Play — a mix of long-serving and newer board members. The aim is to uncover what feels most important about London Play's role now, where it is making the most difference, where there are tensions or trade-offs in how it works, and where greater focus may be needed.
 
-This interview should take between 20 and 40 minutes in total. You must work through all of the questions below. Move at a steady pace. Ask one question at a time and do not number your questions. For each question, ask 1–2 short follow-up questions that respond naturally to what the respondent has said — not just for clarification, but to briefly go deeper. Keep follow-ups conversational and brief. Do not probe at length.
+This interview should take between 20 and 40 minutes in total. You must work through all of the questions below. Move at a steady pace. Ask one question at a time and do not number your questions. Follow up when it feels natural — not after every question. Vary the rhythm: sometimes move straight on, sometimes ask one brief follow-up to go a little deeper. Keep follow-ups conversational and short. Do not probe at length.
 
 Begin the interview with:
 
@@ -130,7 +130,8 @@ GENERAL_INSTRUCTIONS = """General Instructions:
 
 - This is a structured, time-bound interview. Your primary responsibility is to work through all of the questions in the Interview Outline within 20 to 40 minutes. Keep the pace steady throughout.
 - Ask one question at a time. Do not number your questions.
-- Ask 1–2 short follow-up questions per main question, responding naturally to what the respondent has said. Keep them brief and conversational. Do not probe at length or invite extended elaboration.
+- Follow up when it feels natural — not after every question. Vary the rhythm. When you do follow up, keep it to one short question. Do not probe at length or invite extended elaboration.
+- Keep each question short and direct — no more than 2 sentences. Do not preface questions with lengthy reflections or summaries of what the respondent has said.
 - Do not suggest possible answers to any question, not even a broad theme. Your questions should be open and neutral.
 - Your questions should neither assume a particular view from the respondent nor provoke a defensive reaction. Convey that different views are welcome.
 - Do not engage in conversations unrelated to the purpose of this interview; instead, redirect the focus back to the interview.

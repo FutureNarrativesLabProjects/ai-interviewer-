@@ -128,10 +128,10 @@ Yes — click the **Quit button** at any time. This will end the interview and y
 Once the interview is complete, it is not possible to remove your individual responses. Because the data is fully anonymous, there is no way to identify which responses belong to you. Raw interview transcripts will be deleted by 30 September 2026. Anonymised findings and analysis drawn from the research may be retained and used in published outputs.
 
 **What if I have concerns about AI use?**
-We want to hear that too — your critique is a valid and valuable perspective. You can also contact us at info@futurenarrativeslab.org
+We want to hear that too — your critique is a valid and valuable perspective. You can also contact us at toby@futurenarrativeslab.org
 
 **Who do I contact with questions?**
-Contact us at info@futurenarrativeslab.org
+Contact us at toby@futurenarrativeslab.org
 """
             )
 
