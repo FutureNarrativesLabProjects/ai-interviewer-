@@ -272,6 +272,9 @@ with col2:
         )
 
 
+# Tip shown throughout the interview
+st.info("**You're in control of this interview.** If the questions feel too long or complex, just ask for shorter or simpler ones. If the interview feels like too much, you can also ask to wrap up early!")
+
 # Upon rerun, display the previous conversation (except system prompt or first message)
 for message in st.session_state.messages[1:]:
 
