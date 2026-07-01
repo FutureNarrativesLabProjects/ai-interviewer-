@@ -116,9 +116,11 @@ def save_progress_to_sheets(anonymous_id, participant_code, messages):
         gc = gspread.authorize(creds)
         spreadsheet = gc.open_by_key(st.secrets["GOOGLE_SHEET_ID"])
 
-        try:
-            progress_ws = spreadsheet.worksheet("Progress")
-        except gspread.exceptions.WorksheetNotFound:
+        all_titles = [ws.title.lower() for ws in spreadsheet.worksheets()]
+        if "progress" in all_titles:
+            idx = all_titles.index("progress")
+            progress_ws = spreadsheet.worksheets()[idx]
+        else:
             progress_ws = spreadsheet.add_worksheet(title="Progress", rows=200, cols=5)
 
         lines = []
