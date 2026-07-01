@@ -106,6 +106,47 @@ def save_to_google_sheets(anonymous_id, start_time, duration, demographics, comp
         pass
 
 
+def save_progress_to_sheets(anonymous_id, participant_code, messages):
+    """Save in-progress transcript to a Progress tab in Google Sheets, updating existing row if present."""
+    try:
+        scopes = ["https://www.googleapis.com/auth/spreadsheets"]
+        creds = Credentials.from_service_account_info(
+            st.secrets["gcp_service_account"], scopes=scopes
+        )
+        gc = gspread.authorize(creds)
+        spreadsheet = gc.open_by_key(st.secrets["GOOGLE_SHEET_ID"])
+
+        try:
+            progress_ws = spreadsheet.worksheet("Progress")
+        except gspread.exceptions.WorksheetNotFound:
+            progress_ws = spreadsheet.add_worksheet(title="Progress", rows=200, cols=5)
+
+        lines = []
+        for m in messages:
+            if m["role"] == "system":
+                continue
+            if m["role"] == "user" and m["content"] == "Hi":
+                continue
+            label = "Interviewer" if m["role"] == "assistant" else "Participant"
+            lines.append(f"{label}:\n{m['content']}")
+        transcript_text = "\n\n---\n\n".join(lines)
+
+        timestamp = time.strftime("%d/%m/%Y %H:%M:%S")
+        messages_count = sum(
+            1 for m in messages
+            if m["role"] in ("user", "assistant") and m["content"] != "Hi"
+        )
+        row_data = [anonymous_id, participant_code, timestamp, messages_count, transcript_text]
+
+        try:
+            cell = progress_ws.find(participant_code, in_column=2)
+            progress_ws.update([row_data], f"A{cell.row}:E{cell.row}")
+        except gspread.exceptions.CellNotFound:
+            progress_ws.append_row(row_data)
+    except Exception:
+        pass
+
+
 def save_interview_data(
     username,
     transcripts_directory,

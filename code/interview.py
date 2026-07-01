@@ -5,6 +5,7 @@ from utils import (
     check_password,
     check_if_interview_completed,
     save_interview_data,
+    save_progress_to_sheets,
 )
 import os
 import base64
@@ -106,6 +107,12 @@ if not st.session_state.entered:
 - **Who sees your responses** — London Play and Future Narratives Lab will receive anonymised findings
 - **Withdrawal** — you can stop at any time before the interview concludes; once complete, responses cannot be individually removed as they are fully anonymous
 """
+        )
+
+        st.warning(
+            "Please complete this interview in one sitting. "
+            "If you close this window or navigate away, your progress will not be saved "
+            "and you will need to start again from the beginning."
         )
 
         # Collapsed FAQs
@@ -343,6 +350,11 @@ if not st.session_state.messages:
         file_name_addition_transcript=f"_transcript_started_{st.session_state.start_time_file_names}",
         file_name_addition_time=f"_time_started_{st.session_state.start_time_file_names}",
     )
+    save_progress_to_sheets(
+        anonymous_id=st.session_state.anonymous_id,
+        participant_code=st.session_state.demographics.get("participant_code", ""),
+        messages=st.session_state.messages,
+    )
 
 
 # Main chat if interview is active
@@ -410,6 +422,11 @@ if st.session_state.interview_active:
                         times_directory=config.BACKUPS_DIRECTORY,
                         file_name_addition_transcript=f"_transcript_started_{st.session_state.start_time_file_names}",
                         file_name_addition_time=f"_time_started_{st.session_state.start_time_file_names}",
+                    )
+                    save_progress_to_sheets(
+                        anonymous_id=st.session_state.anonymous_id,
+                        participant_code=st.session_state.demographics.get("participant_code", ""),
+                        messages=st.session_state.messages,
                     )
                 except:
                     pass
