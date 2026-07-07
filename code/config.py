@@ -109,9 +109,9 @@ Ask: 'What would success look like for London Play in three years' time?'
 
 Then ask: 'What would concern you if it hasn't been addressed by then?'
 
-Final question
+Closing strategy question
 
-Close with: 'One final question: if London Play didn't exist, what would London lose?'
+Close with: 'One last strategy question, then we'll move to a short final section: if London Play didn't exist, what would London lose?'
 
 Wait for the respondent's full answer before continuing. Do not ask the next question in the same message as this one.
 

@@ -79,8 +79,8 @@ How can the organisation stay grounded in children's experiences and voices with
 What would success look like for London Play in three years' time?
 What would concern you if it hasn't been addressed by then?
 
-### Closing question
-"One final question: if London Play didn't exist, what would London lose?"
+### Closing strategy question
+"One last strategy question, then we'll move to a short final section: if London Play didn't exist, what would London lose?"
 
 ---
 

@@ -140,11 +140,11 @@ def save_progress_to_sheets(anonymous_id, participant_code, messages):
         )
         row_data = [anonymous_id, participant_code, timestamp, messages_count, transcript_text]
 
-        try:
-            cell = progress_ws.find(participant_code, in_column=2)
-            progress_ws.update([row_data], f"A{cell.row}:E{cell.row}")
-        except gspread.exceptions.CellNotFound:
+        cell = progress_ws.find(participant_code, in_column=2)
+        if cell is None:
             progress_ws.append_row(row_data)
+        else:
+            progress_ws.update([row_data], f"A{cell.row}:E{cell.row}")
     except Exception:
         pass
 
